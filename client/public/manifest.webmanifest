@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "Vista Royal",
+  "short_name": "Vista Royal",
+  "description": "Pakistani boutique fashion for the modern woman.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#171512",
+  "theme_color": "#171512",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
