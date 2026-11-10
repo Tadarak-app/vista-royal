@@ -232,9 +232,9 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="footer-main">
-          <Wordmark compact onHome={() => selectTab("home")} />
-          <p>{whatsappPhone}<br /><a href={`mailto:${contactEmail}`}>{contactEmail}</a><br />Barki Road · Lahore, Pakistan</p>
-          <a className="footer-facebook" href={facebookPageUrl} target="_blank" rel="noreferrer"><Facebook size={16} /> Vista Royal on Facebook <ArrowUpRight size={14} /></a>
+          <div className="footer-owner-credit"><span>© 2026 · VISTA ROYAL</span><strong>All rights to Zohaib Qaiser</strong><small>{whatsappPhone} · Barki Road, Lahore</small><a href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
+          <a className="footer-facebook" href={facebookPageUrl} target="_blank" rel="noreferrer" aria-label="Visit Vista Royal on Facebook"><span className="footer-facebook-mark"><Facebook size={23} strokeWidth={2.5} /></span><span>VISTA ROYAL ON FACEBOOK</span></a>
+          <a className="developer-credit-button" href="https://callmedrake.vercel.app/" target="_blank" rel="noreferrer">Dev by Zohaib Qaiser <ArrowUpRight size={15} /></a>
         </div>
         <nav className="footer-tabs" aria-label="Footer store sections">
           {tabs.map((tab) => <button type="button" key={tab.id} onClick={() => selectTab(tab.id)}>{tab.label}</button>)}

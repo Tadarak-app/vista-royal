@@ -202,14 +202,21 @@ blockquote cite { color: #8f8679; font-size: 8px; font-style: normal; font-weigh
 .contact-card > svg { align-self: flex-end; margin-top: auto; color: #9a6208; }
 .contact-card.whatsapp-card { border-top: 2px solid #43a968; }
 .site-footer { padding: 31px clamp(20px, 8vw, 122px) 0; background: #11100e; }
-.footer-main { min-height: 112px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.footer-main { min-height: 132px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .wordmark-compact { min-width: auto; }
 .wordmark-compact .wordmark-emblem { width: 35px; height: 35px; }
 .wordmark-compact .wordmark-text strong { font-size: 12px; }
-.footer-main > p { margin: 0; color: #aaa294; font-size: 10px; line-height: 1.9; }
-.footer-main > p a:hover { color: var(--saffron-bright); }
-.footer-facebook { display: inline-flex; align-items: center; gap: 7px; color: #d5cdbc; font-size: 10px; }
+.footer-owner-credit { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.footer-owner-credit > span { color: #948b7e; font-size: 7px; font-weight: 700; letter-spacing: .13em; }
+.footer-owner-credit strong { color: var(--paper); font-family: var(--serif); font-size: 13px; font-weight: 600; }
+.footer-owner-credit small, .footer-owner-credit a { color: #aaa294; font-size: 9px; }
+.footer-owner-credit a:hover { color: var(--saffron-bright); }
+.footer-facebook { display: flex; justify-self: center; flex-direction: column; align-items: center; gap: 7px; color: #d5cdbc; font-size: 7px; font-weight: 700; letter-spacing: .11em; }
+.footer-facebook-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: #1877f2; color: #fff; transition: transform .18s ease; }
 .footer-facebook:hover { color: var(--saffron-bright); }
+.footer-facebook:hover .footer-facebook-mark { transform: translateY(-2px); }
+.developer-credit-button { min-height: 42px; display: inline-flex; justify-self: end; align-items: center; gap: 8px; padding: 0 14px; border: 1px solid rgba(217,144,20,.65); background: rgba(217,144,20,.09); color: var(--paper); font-size: 9px; font-weight: 700; transition: background .18s ease, color .18s ease; }
+.developer-credit-button:hover { background: var(--saffron); color: var(--ink); }
 .footer-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; padding: 12px 0; border-top: 1px solid rgba(244,239,229,.09); }
 .footer-tabs button { padding: 5px 3px; border: 0; background: transparent; color: #938b7e; cursor: pointer; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .footer-tabs button:hover { color: var(--saffron-bright); }
@@ -380,9 +387,11 @@ blockquote cite { color: #8f8679; font-size: 8px; font-style: normal; font-weigh
   .contact-card { min-height: 130px; padding: 17px; }
   .contact-card strong { margin-top: 9px; font-size: 19px; }
   .site-footer { padding: 25px 20px 28px; }
-  .footer-main { min-height: 160px; display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 19px; }
-  .footer-main > p { font-size: 9px; }
-  .footer-facebook { grid-column: 1 / -1; }
+  .footer-main { min-height: 0; grid-template-columns: 1fr; justify-items: center; gap: 16px; padding: 5px 0 18px; text-align: center; }
+  .footer-owner-credit { align-items: center; }
+  .footer-owner-credit strong { font-size: 12px; }
+  .footer-facebook { justify-self: center; }
+  .developer-credit-button { justify-self: center; }
   .footer-bottom { min-height: 44px; flex-wrap: wrap; justify-content: flex-start; padding: 11px 0; font-size: 6px; }
   .footer-bottom span:nth-child(2) { display: none; }
   .footer-bottom button { margin-left: auto; }

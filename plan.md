@@ -2,7 +2,7 @@
 
 ## Scope
 
-Build the public, mobile-first Vista Royal boutique storefront as a Vite/React single-page site. Follow the user's requested Penzo Mart reference (https://penzo-lovat.vercel.app/) for commerce clarity and card treatment, and the Call Me Drake reference (https://callmedrake.vercel.app/) for a numbered top-tab navigation and distinct in-page sections. Provide a persistent top row with clear **Home**, **Shop**, **Reviews**, **Exchange**, **About**, and **Contact** tabs. The selected tab replaces the content panel in place without following anchor links, changing the page route, or reloading. Product details remain a separate new-tab route.
+Build the public, mobile-first Vista Royal boutique storefront as a Vite/React single-page site. Follow the user's requested Penzo Mart reference (https://penzo-lovat.vercel.app/) for commerce clarity and card treatment, and the Call Me Drake reference (https://callmedrake.vercel.app/) for a numbered top-tab navigation and distinct in-page sections. Provide a persistent top row with clear **Home**, **Shop**, **Reviews**, **Exchange**, **About**, and **Contact** tabs. The selected tab replaces the content panel in place without following anchor links, changing the page route, or reloading. Product details remain a separate new-tab route. Use the requested three-part footer: left-side rights notice, centered Facebook logo link, and right-side developer credit link.
 
 The requested Facebook page describes Vista Royal as “Redefining Pakistani fashion for the modern woman, Vista Royal brings you elite boutique designs at highly accessible price points,” and identifies it as a clothing brand in Barki Road. Its accessible public view gives +92 328 5945319 and czarzohaib@gmail.com but no product listings, individual product photographs, or prices. Do not fabricate listings, prices, or testimonials. A typed catalog model and presentation components are ready for real owner-provided data; until then the Shop tab shows a clear no-catalog-yet state and a WhatsApp enquiry. The 4.3/5 display is owner-reported overall WhatsApp feedback, not an individual product score or a Facebook rating; the Facebook page currently reports “Not yet rated (0 reviews).” Do not invent a review count, rating distribution, or customer quote.
 
@@ -10,7 +10,7 @@ The requested Facebook page describes Vista Royal as “Redefining Pakistani fas
 
 ## Implementation and project structure
 
-- `client/src/pages/Home.tsx`: persistent accessible tab bar, Home/Shop/Reviews/Exchange/About/Contact panels, search/filter, verified rating context, owner/policy/contact content.
+- `client/src/pages/Home.tsx`: persistent accessible tab bar, Home/Shop/Reviews/Exchange/About/Contact panels, search/filter, verified rating context, owner/policy/contact content, and the three-column attribution footer.
 - `client/src/pages/Product.tsx`: product-detail route opened in a new tab using client-side navigation; render only when a real catalog item exists.
 - `client/src/components/store/`: product card and guest cart drawer, with keyboard focus containment and restoration.
 - `client/src/data/catalog.ts`: typed, presently empty owner-maintained catalog source; no fake products or prices.
@@ -29,7 +29,7 @@ The requested Facebook page describes Vista Royal as “Redefining Pakistani fas
 
 **Color philosophy:** ink-black surfaces create strong contrast and a boutique editorial tone; saffron is reserved for actions and small signature accents; warm ivory carries reading surfaces without competing with product photography.
 
-**Layout paradigm:** compact sticky brand header, distinct numbered top tabs inspired by the owner's Call Me Drake site, and one active content panel at a time. Home leads with an editorial hero and section shortcuts; Shop contains search, collections and responsive product cards; Reviews, Exchange, About and Contact each have their own in-place panel. On mobile the tab row remains visible, scrolls horizontally when needed, and keeps a distinct active indicator. Do not use scrolling anchor navigation between these sections.
+**Layout paradigm:** compact sticky brand header, distinct numbered top tabs inspired by the owner's Call Me Drake site, and one active content panel at a time. Home leads with an editorial hero and section shortcuts; Shop contains search, collections and responsive product cards; Reviews, Exchange, About and Contact each have their own in-place panel. On mobile the tab row remains visible, scrolls horizontally when needed, and keeps a distinct active indicator. Do not use scrolling anchor navigation between these sections. The footer has three explicit aligned roles: rights text at left, an accessible Facebook logo-link in the center, and a developer-credit button at right.
 
 **Signature elements:** a restrained crown/VR-inspired wordmark; thin saffron rules and corner markers; concise uppercase section indices. These are graphic framing devices, not claimed official artwork.
 
