@@ -1,5 +1,5 @@
-const CACHE_NAME = "vista-royal-shell-v1";
-const SHELL_URLS = ["/", "/manifest.webmanifest", "/offline.html", "/icons/icon-192.png", "/icons/icon-512.png"];
+const CACHE_NAME = "vista-royal-shell-v2";
+const SHELL_URLS = ["/", "/manifest.webmanifest", "/offline.html", "/icons/icon.svg", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/vista-royal-mark.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_URLS)).then(() => self.skipWaiting()));

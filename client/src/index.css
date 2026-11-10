@@ -420,6 +420,45 @@ blockquote cite { color: #8f8679; font-size: 8px; font-style: normal; font-weigh
   .rating-explainer h2 { font-size: 26px; }
   .product-actions .button { gap: 4px; font-size: 8px; }
 }
+
+/* Warm-gold reading surfaces requested for the Vista Royal storefront. */
+:root {
+  --gold-surface: #d6b15d;
+  --gold-card: #ecd798;
+  --gold-card-hover: #f2e4b7;
+  --gold-border: #b8923e;
+}
+.home-shortcuts, .shop-section, .owner-section, .contact-page { background: var(--gold-surface); color: var(--ink); }
+.home-shortcuts .section-topline, .shop-section .section-topline, .owner-section .section-topline { color: #5f4b22; }
+.home-shortcut-grid, .contact-card-grid { border-color: var(--gold-border); background: var(--gold-border); }
+.home-shortcut, .contact-card { background: var(--gold-card); color: var(--ink); }
+.home-shortcut:hover, .contact-card:hover { background: var(--gold-card-hover); }
+.home-shortcut > span, .contact-card > span { color: #604817; }
+.home-shortcut small, .contact-card small { color: #514528; }
+.home-shortcut > svg, .contact-card > svg { color: #6c4c12; }
+.shop-section .eyebrow, .shop-section h2 em, .shop-section .text-link, .contact-page .eyebrow, .contact-page-intro h1 em { color: #654810; }
+.search-form, .product-card, .cart-drawer { background: var(--gold-card); border-color: var(--gold-border); color: var(--ink); }
+.search-form input { color: var(--ink); }
+.search-form input::placeholder { color: #574a2d; }
+.filter-chip { border-color: var(--gold-border); color: #473918; }
+.catalog-empty-state { background: #e2c77f; border-color: var(--gold-border); }
+.product-card-bottom { border-color: #c0a55f; }
+.product-card-image { background: #d6b15d; }
+.cart-drawer-header, .cart-summary { border-color: #b99d59; }
+.cart-item, .quantity-stepper, .icon-button { border-color: #b99d59; }
+.contact-card-grid { border-width: 1px; }
+.product-collection, .product-rating { color: #5b4518; }
+.product-rating span, .section-topline, .empty-state-number { color: #574b2d; }
+.empty-state-content > p:not(.eyebrow), .no-search-results, .contact-page-intro > p:last-child { color: #4d432d; }
+.owner-section .owner-alias, .owner-section .owner-source, .owner-section blockquote cite { color: #51472f; }
+.owner-section .owner-bio > p:first-child { color: #342d1f; }
+.button-quiet { border-color: #8f702e; color: var(--ink); }
+.button-quiet:hover { color: #583e0e; }
+.wordmark-emblem { width: 46px; height: 46px; border: 0; border-radius: 50%; color: inherit; }
+.wordmark-emblem img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; }
+.wordmark-compact .wordmark-emblem { width: 38px; height: 38px; }
+@media (max-width: 760px) { .wordmark-emblem { width: 38px; height: 38px; } }
+@media (max-width: 390px) { .wordmark-emblem { width: 34px; height: 34px; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

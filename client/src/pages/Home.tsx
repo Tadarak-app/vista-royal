@@ -22,9 +22,9 @@ function Wordmark({ compact = false, onHome }: { compact?: boolean; onHome: () =
   return (
     <button className={`wordmark${compact ? " wordmark-compact" : ""}`} type="button" onClick={onHome} aria-label="Show Vista Royal home tab">
       <span className="wordmark-emblem" aria-hidden="true">
-        <svg viewBox="0 0 44 44" role="presentation"><path d="M8 14.5 15 20l7-10 7 10 7-5.5-3 16.5H11L8 14.5Z" /><path d="M14 35h16M18 27l4 5 4-5" /></svg>
+        <img src="/icons/icon-192.png" alt="" />
       </span>
-      <span className="wordmark-text"><strong>VISTA ROYAL</strong><small>PAKISTANI BOUTIQUE FASHION</small></span>
+      <span className="wordmark-text"><strong>VISTA ROYAL</strong><small>LUXURY LADIES WEAR</small></span>
     </button>
   );
 }
