@@ -18,7 +18,7 @@ The user supplied the official Vista Royal logo image and asked to replace the c
 - `client/src/data/catalog.ts`: typed owner-maintained catalogue containing 31 descriptions, prices, color/design collections, and matching local image paths.
 - `client/public/assets/catalog/`: 31 extracted source photos in catalogue order.
 - `client/src/lib/storefront.ts` and `client/src/contexts/CartContext.tsx`: PKR formatting, safe WhatsApp enquiry links, and guest cart backed by local storage.
-- `client/public/assets/vista-royal-logo.png`: cropped, transparent-background version of the supplied official wordmark used in the site header.
+- `client/public/icons/vista-royal-mark.png` and `client/public/icons/icon-192.png`: supplied-logo mark used in the header; the square PNG icons and SVG favicon are stored in `client/public/icons/`.
 - `client/public/manifest.webmanifest`, `client/public/sw.js`, and `client/public/icons/`: app-owned PWA manifest, supplied-logo favicon and install icons, service worker, and offline shell.
 - `client/public/manus-routes.json`: synchronized page-route declaration required by Webdev.
 - `client/index.html` and `app.config.ts`: page/PWA metadata and project logo reference.
@@ -48,4 +48,4 @@ The user supplied the official Vista Royal logo image and asked to replace the c
 
 ## Delivery path
 
-The user identified the public GitHub repository `https://github.com/Tadarak-app/vista-royal` as the existing site source and requested changes to its Vercel site. Make changes in a clean working copy of that repository and validate the static build. A public repository permits reading and preparing changes but does not itself grant authority to push to the repository or deploy to the Vercel project. The currently connected Vercel account has not exposed the Vista Royal project; do not claim publication or attempt to take over the domain. If write/deploy access remains unavailable, deliver the prepared changes and clearly state the access required for publication.
+The user identified the public GitHub repository `https://github.com/Tadarak-app/vista-royal` as the existing site source and requested changes to its Vercel site. The active `Tadarak-app` GitHub account was verified with repository admin/push access. Commit `bf44b119347b4fd2d306f1de2dee0af79ec63bcf` was pushed to `main`; its Vercel GitHub status completed successfully, and the public domain was smoke-tested for the new app bundle, logo icons, manifest, and catalogue photos. Direct Vercel MCP access to this project is unavailable, but the existing GitHub-to-Vercel deployment path is verified. For future authorized code changes, push through the repository and verify both the Vercel status and public endpoints before claiming deployment.
