@@ -7,7 +7,7 @@ type CartState = {
   lines: ResolvedCartLine[];
   itemCount: number;
   subtotalPkr: number;
-  addItem: (productId: string) => void;
+  addItem: (productId: string, quantity?: number) => void;
   setQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
@@ -57,13 +57,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lines,
       itemCount,
       subtotalPkr,
-      addItem(productId) {
+      addItem(productId, requestedQuantity = 1) {
         if (!products.some((product) => product.id === productId)) return;
+        const quantity = Math.max(1, Math.min(99, Math.floor(requestedQuantity)));
         setRawLines((current) => {
           const found = current.find((line) => line.productId === productId);
           return found
-            ? current.map((line) => line.productId === productId ? { ...line, quantity: line.quantity + 1 } : line)
-            : [...current, { productId, quantity: 1 }];
+            ? current.map((line) => line.productId === productId ? { ...line, quantity: Math.min(99, line.quantity + quantity) } : line)
+            : [...current, { productId, quantity }];
         });
       },
       setQuantity(productId, quantity) {

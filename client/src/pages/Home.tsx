@@ -1,248 +1,75 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, Facebook, Search, ShoppingBag } from "lucide-react";
-import { products, shopRating, exchangePolicy, facebookPageUrl, contactEmail, whatsappPhone } from "@/data/catalog";
-import { useCart } from "@/contexts/CartContext";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Facebook, MessageCircle, MoveUpRight } from "lucide-react";
+import { useEffect } from "react";
+import { Link } from "wouter";
+import StoreLayout from "@/components/store/StoreLayout";
 import ProductCard from "@/components/store/ProductCard";
-import CartDrawer from "@/components/store/CartDrawer";
-import { cartEnquiryLink, whatsappLink } from "@/lib/storefront";
+import { products, shopRating, exchangePolicy, facebookPageUrl, whatsappPhone } from "@/data/catalog";
+import { whatsappLink } from "@/lib/storefront";
+import { updatePageMetadata } from "@/lib/seo";
 
-const ownerQuote = "What are your choices when someone puts a gun to your head? You take the gun, or you pull out a bigger one. Or, you call their bluff.";
-const whatsappGeneral = whatsappLink("Assalam-o-alaikum Vista Royal, please share your current collection, availability and prices.");
-const tabs = [
-  { id: "home", index: "I", label: "Home" },
-  { id: "shop", index: "II", label: "Shop" },
-  { id: "reviews", index: "III", label: "Reviews" },
-  { id: "exchange", index: "IV", label: "Exchange" },
-  { id: "about", index: "V", label: "About" },
-  { id: "contact", index: "VI", label: "Contact" },
-] as const;
-type StoreTab = (typeof tabs)[number]["id"];
+const imageRoot = "/assets/catalog/stock-2026/";
+const lookbook = [
+  { src: `${imageRoot}page-017.jpg`, alt: "Soft rose embroidered formal look in a full-length studio photograph.", note: "A moment in rose" },
+  { src: `${imageRoot}page-029.jpg`, alt: "Deep green embroidered outfit with coordinating dupatta.", note: "Colour, composed" },
+  { src: `${imageRoot}page-051.jpg`, alt: "Model wearing a vivid pink outfit in a relaxed outdoor setting.", note: "A brighter note" },
+  { src: `${imageRoot}page-094.jpg`, alt: "Full-length formal outfit with a flowing silhouette.", note: "For the entrance" },
+];
 
-function Wordmark({ compact = false, onHome }: { compact?: boolean; onHome: () => void }) {
-  return (
-    <button className={`wordmark${compact ? " wordmark-compact" : ""}`} type="button" onClick={onHome} aria-label="Show Vista Royal home tab">
-      <span className="wordmark-emblem" aria-hidden="true">
-        <img src="/icons/icon-192.png" alt="" />
-      </span>
-      <span className="wordmark-text"><strong>VISTA ROYAL</strong><small>LUXURY LADIES WEAR</small></span>
-    </button>
-  );
-}
-
-function InstallButton() {
-  const [promptEvent, setPromptEvent] = useState<(Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> }) | null>(null);
-  const [installed, setInstalled] = useState(false);
-
-  useEffect(() => {
-    const onBeforeInstall = (event: Event) => {
-      event.preventDefault();
-      setPromptEvent(event as Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> });
-    };
-    const onInstalled = () => { setInstalled(true); setPromptEvent(null); };
-    window.addEventListener("beforeinstallprompt", onBeforeInstall);
-    window.addEventListener("appinstalled", onInstalled);
-    return () => {
-      window.removeEventListener("beforeinstallprompt", onBeforeInstall);
-      window.removeEventListener("appinstalled", onInstalled);
-    };
-  }, []);
-
-  if (!promptEvent || installed) return null;
-  return <button className="install-button" type="button" onClick={async () => { await promptEvent.prompt(); setPromptEvent(null); }}>Install app <ArrowDown size={14} /></button>;
-}
+const categoryCards = [
+  { title: "Occasionwear", href: "/collections/occasionwear", image: `${imageRoot}page-017.jpg`, alt: "Model in a rose-toned embroidered formal outfit." },
+  { title: "Embroidered Edit", href: "/collections/embroidered", image: "/assets/catalog/photo-13.jpg", alt: "Model in a deep teal embroidered outfit." },
+  { title: "Winter Edit", href: "/collections/winter-edit", image: `${imageRoot}page-062.jpg`, alt: "Winter collection campaign image in a deep colour palette." },
+  { title: "Printed Edit", href: "/collections/printed", image: "/assets/catalog/photo-24.jpg", alt: "Navy outfit with a printed border dupatta." },
+];
 
 export default function Home() {
-  const { itemCount } = useCart();
-  const [cartOpen, setCartOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<StoreTab>("home");
-  const [query, setQuery] = useState("");
-  const [selectedCollection, setSelectedCollection] = useState("All pieces");
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  useEffect(() => { updatePageMetadata({ title: "Vista Royal — A Considered Edit of Pakistani Fashion", description: "Discover a considered edit of Pakistani women's fashion at Vista Royal. Explore embroidered, occasionwear, winter and printed collections, and ask about availability." }); }, []);
+  const newPieces = products.filter((product) => product.isNew).slice(0, 4);
+  const featuredPieces = newPieces.length ? newPieces : products.slice(0, 4);
+  const generalWhatsApp = whatsappLink("Assalam-o-alaikum Vista Royal, please share the current collection and availability.");
+  return <StoreLayout>
+    <section className="hero-section">
+      <div className="hero-copy">
+        <p className="eyebrow hero-kicker"><span /> THE ROYAL EDIT · 01</p>
+        <h1>An entrance<br />of <em>your own.</em></h1>
+        <p className="hero-intro">A considered edit of Pakistani womenswear, shaped by expressive colour, intricate detail and silhouettes made to be remembered.</p>
+        <div className="hero-ctas"><Link className="button button-primary" href="/collections/new-in">Discover new arrivals <ArrowRight size={16} /></Link><a className="button button-text" href={generalWhatsApp} target="_blank" rel="noreferrer">Speak with us <ArrowUpRight size={15} /></a></div>
+        <div className="hero-bottom-note"><span>VISTA ROYAL · LAHORE</span><span>PAKISTANI WOMEN'S FASHION</span></div>
+      </div>
+      <div className="hero-art"><img src={`${imageRoot}page-017.jpg`} alt="Full-length editorial photograph of a model in a rose-toned embroidered Pakistani formal outfit." fetchPriority="high" /><span className="hero-art-frame" aria-hidden="true">VR</span><div className="hero-art-label"><span>THE OCCASION EDIT</span><ArrowDownRight size={15} /></div><span className="hero-side-label">COLOUR · CRAFT · PRESENCE</span></div>
+    </section>
 
-  const collections = useMemo(() => Array.from(new Set(products.map((product) => product.collection))), []);
-  const visibleProducts = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    return products.filter((product) => {
-      const matchesCollection = selectedCollection === "All pieces" || product.collection === selectedCollection;
-      const matchesTerm = !term || `${product.title} ${product.description} ${product.collection} ${(product.tags ?? []).join(" ")}`.toLowerCase().includes(term);
-      return matchesCollection && matchesTerm;
-    });
-  }, [query, selectedCollection]);
+    <section className="category-section section-pad">
+      <div className="section-heading-row"><div><p className="eyebrow">A POINT OF VIEW, IN FOUR EDITS</p><h2>Find your <em>expression.</em></h2></div><Link className="text-link" href="/collections/all">View the full collection <ArrowUpRight size={14} /></Link></div>
+      <div className="category-grid">{categoryCards.map((item, index) => <Link className={`category-card category-card-${index + 1}`} href={item.href} key={item.title}><img src={item.image} alt={item.alt} loading="lazy" /><span className="category-card-index">0{index + 1} / THE EDIT</span><strong>{item.title}</strong><span className="category-arrow"><ArrowUpRight size={17} /></span></Link>)}</div>
+    </section>
 
-  const selectTab = (id: StoreTab) => {
-    setActiveTab(id);
-    window.scrollTo({ top: 0, behavior: "auto" });
-  };
+    <section className="featured-section section-pad">
+      <div className="section-topline"><span>01 / THE SELECTION</span><span>VISTA ROYAL · CURRENT EDIT</span></div>
+      <div className="section-heading-row"><div><p className="eyebrow">NEWLY ADDED, CAREFULLY DESCRIBED</p><h2>Pieces with <em>presence.</em></h2></div><Link className="text-link" href="/collections/new-in">Shop new in <ArrowUpRight size={14} /></Link></div>
+      <div className="product-grid">{featuredPieces.map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}</div>
+    </section>
 
-  const handleTabKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    const current = tabs.findIndex((tab) => tab.id === activeTab);
-    let next = current;
-    if (event.key === "ArrowRight") next = (current + 1) % tabs.length;
-    else if (event.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = tabs.length - 1;
-    else return;
-    event.preventDefault();
-    tabRefs.current[next]?.focus();
-    selectTab(tabs[next].id);
-  };
+    <section className="editorial-feature section-pad">
+      <div className="editorial-image"><img src="/assets/vista-royal-editorial.webp" alt="Close editorial view of fabric and decorative detail from the existing Vista Royal image collection." loading="lazy" /><span>DETAILS IN FOCUS · VISTA ROYAL</span></div>
+      <div className="editorial-copy"><p className="eyebrow">A CLOSER LOOK</p><h2>It is the detail<br />that makes the <em>moment.</em></h2><p>Explore embroidered work, considered colour and the pieces that bring an occasion into focus. Product details and prices are shown as supplied; ask us to confirm current availability before ordering.</p><Link className="button button-outline" href="/collections/embroidered">Explore the embroidered edit <ArrowRight size={15} /></Link><span className="editorial-index">THE ROYAL EDIT · 02</span></div>
+    </section>
 
-  const submitSearch = (event: FormEvent<HTMLFormElement>) => event.preventDefault();
+    <section className="lookbook-section section-pad">
+      <div className="section-heading-row"><div><p className="eyebrow">VISTA ROYAL LOOKBOOK</p><h2>Made to <em>move.</em></h2></div><Link className="text-link" href="/lookbook">Open lookbook <ArrowUpRight size={14} /></Link></div>
+      <div className="lookbook-grid">{lookbook.map((item, index) => <Link className={`lookbook-card lookbook-card-${index + 1}`} href="/lookbook" key={item.src}><img src={item.src} alt={item.alt} loading="lazy" /><span>0{index + 1} · {item.note}</span></Link>)}</div>
+    </section>
 
-  return (
-    <div className="storefront" id="top">
-      <div className="announcement-bar"><span>VISTA ROYAL · LAHORE, PAKISTAN</span><a href={whatsappGeneral} target="_blank" rel="noreferrer">Ask for the current collection <ArrowUpRight size={12} /></a></div>
-      <header className="site-header">
-        <div className="site-header-main">
-          <Wordmark onHome={() => selectTab("home")} />
-          <div className="header-actions">
-            <InstallButton />
-            <button className="cart-trigger" type="button" onClick={() => setCartOpen(true)} aria-label={`Open shopping bag, ${itemCount} items`}>
-              <ShoppingBag size={18} /><span>Bag</span><b>{itemCount}</b>
-            </button>
-          </div>
-        </div>
-        <nav className="top-tabs" role="tablist" aria-label="Vista Royal sections" onKeyDown={handleTabKeyDown}>
-          {tabs.map((tab, index) => (
-            <button
-              key={tab.id}
-              ref={(element) => { tabRefs.current[index] = element; }}
-              id={`tab-${tab.id}`}
-              className="top-tab"
-              type="button"
-              role="tab"
-              aria-selected={activeTab === tab.id}
-              aria-controls={`panel-${tab.id}`}
-              tabIndex={activeTab === tab.id ? 0 : -1}
-              onClick={() => selectTab(tab.id)}
-            >
-              <span className="top-tab-index">{tab.index}</span><span className="top-tab-label">{tab.label}</span>
-            </button>
-          ))}
-        </nav>
-      </header>
+    <section className="brand-note section-pad">
+      <div className="brand-note-mark"><span>V</span><span>R</span></div><div><p className="eyebrow">A LUMINOUS POINT OF VIEW</p><h2>Pakistani fashion,<br /><em>with a signature.</em></h2></div><p>Vista Royal is a Lahore-based online boutique with a focus on expressive Pakistani women's fashion. For fit, colour, stock and delivery details, our team is a message away.</p>
+    </section>
 
-      <main className="site-main">
-        <section className="tab-panel home-tab" id="panel-home" role="tabpanel" aria-labelledby="tab-home" tabIndex={0} hidden={activeTab !== "home"}>
-          <section className="hero-section">
-            <div className="hero-copy">
-              <p className="eyebrow hero-kicker"><span /> VISTA ROYAL · LAHORE</p>
-              <h1>Made for the<br /><em>way you arrive.</em></h1>
-              <p className="hero-intro">Redefining Pakistani fashion for the modern woman — elite boutique designs at highly accessible price points.</p>
-              <div className="hero-ctas">
-                <button className="button button-primary" type="button" onClick={() => selectTab("shop")}>Explore the collection <ArrowRight size={16} /></button>
-                <a className="button button-text" href={whatsappGeneral} target="_blank" rel="noreferrer">Ask on WhatsApp <ArrowUpRight size={15} /></a>
-              </div>
-              <div className="hero-bottom-note"><span className="hero-index">01 / 03</span><span>PAKISTANI BOUTIQUE FASHION</span></div>
-            </div>
-            <div className="hero-art" aria-label="Editorial detail of dark fabric and saffron embroidery">
-              <img src="/assets/vista-royal-editorial.webp" alt="Decorative editorial fabric detail in Vista Royal's ink and saffron palette" fetchPriority="high" />
-              <span className="hero-art-label">AN EDIT FOR EVERY ARRIVAL</span>
-              <span className="hero-art-index">V / R</span>
-            </div>
-            <div className="hero-side-label" aria-hidden="true">VISTA ROYAL — 2026</div>
-          </section>
-          <section className="home-shortcuts section-pad" aria-label="Explore Vista Royal">
-            <div className="section-topline"><span>01 / EXPLORE</span><span>CHOOSE A SECTION</span></div>
-            <div className="home-shortcut-grid">
-              <button className="home-shortcut" type="button" onClick={() => selectTab("shop")}><span>I / THE COLLECTION</span><strong>Shop Vista Royal</strong><small>Open the collection and check current availability.</small><ArrowRight size={17} /></button>
-              <button className="home-shortcut" type="button" onClick={() => selectTab("reviews")}><span>II / CUSTOMER NOTES</span><strong>4.3 / 5 overall</strong><small>Owner-reported feedback received on WhatsApp.</small><ArrowRight size={17} /></button>
-              <button className="home-shortcut" type="button" onClick={() => selectTab("exchange")}><span>III / BEFORE YOU BUY</span><strong>Exchange policy</strong><small>See the rule for damaged or incorrect items.</small><ArrowRight size={17} /></button>
-              <button className="home-shortcut" type="button" onClick={() => selectTab("about")}><span>IV / THE PERSON BEHIND THE LABEL</span><strong>About the owner</strong><small>Meet Zohaib Qaiser and learn the story.</small><ArrowRight size={17} /></button>
-            </div>
-          </section>
-        </section>
+    <section className="service-strip section-pad" aria-label="Customer information">
+      <div><span>01</span><h3>Details, clearly stated</h3><p>Product descriptions reflect the information currently supplied.</p></div><div><span>02</span><h3>Availability by enquiry</h3><p>Ask us to confirm stock, colour and sizing before ordering.</p></div><div><span>03</span><h3>A clear exchange policy</h3><p>{exchangePolicy}</p></div><div><span>04</span><h3>Direct support</h3><p>Contact Vista Royal on WhatsApp at {whatsappPhone}.</p></div>
+    </section>
 
-        <section className="tab-panel shop-tab" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop" tabIndex={0} hidden={activeTab !== "shop"}>
-          <section className="shop-section section-pad">
-            <div className="section-topline"><span>01 / SHOP</span><span>{products.length ? `${products.length} VERIFIED PIECES` : "CURRENT COLLECTION"}</span></div>
-            <div className="section-heading-row">
-              <div><p className="eyebrow">THE VISTA ROYAL EDIT</p><h2>Find your <em>look.</em></h2></div>
-              <a className="text-link" href={whatsappGeneral} target="_blank" rel="noreferrer">Ask us what's in <ArrowUpRight size={15} /></a>
-            </div>
-            <form className="search-form" onSubmit={submitSearch} role="search">
-              <Search size={19} aria-hidden="true" />
-              <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the collection" aria-label="Search Vista Royal products" />
-              <button className="search-submit" type="submit">Search</button>
-            </form>
-            {collections.length > 0 && <div className="collection-filters" aria-label="Filter by collection">
-              {["All pieces", ...collections].map((collection) => <button className={selectedCollection === collection ? "filter-chip active" : "filter-chip"} type="button" key={collection} onClick={() => setSelectedCollection(collection)}>{collection}</button>)}
-            </div>}
-            {products.length === 0 ? (
-              <div className="catalog-empty-state">
-                <div className="empty-state-number">01</div>
-                <div className="empty-state-content">
-                  <p className="eyebrow">THE COLLECTION IS BEING UPDATED</p>
-                  <h3>New pieces belong here.</h3>
-                  <p>We couldn't find individual product listings, photos or prices on Vista Royal's public Facebook page. Message us for current designs, sizes and prices while the verified catalogue is prepared.</p>
-                  <a className="button button-primary" href={whatsappGeneral} target="_blank" rel="noreferrer">Request today's collection <ArrowUpRight size={16} /></a>
-                </div>
-                <div className="empty-state-stamp"><span>VR</span><small>VISTA<br />ROYAL</small></div>
-              </div>
-            ) : visibleProducts.length > 0 ? (
-              <div className="product-grid">{visibleProducts.map((product) => <ProductCard key={product.id} product={product} onAdded={() => setCartOpen(true)} />)}</div>
-            ) : (
-              <div className="no-search-results"><p>No pieces match “{query}”.</p><button className="button button-quiet" type="button" onClick={() => { setQuery(""); setSelectedCollection("All pieces"); }}>Clear filters</button></div>
-            )}
-          </section>
-        </section>
+    <section className="rating-note section-pad"><div className="rating-number">{shopRating.score.toFixed(1)}<small>/ 5</small></div><div><p className="eyebrow">A NOTE FROM THE STORE</p><h2>Customer feedback, <em>shared honestly.</em></h2><p>This is the owner's reported overall feedback received on WhatsApp. It is not a product-specific rating. Facebook currently shows: {shopRating.facebookStatus}.</p></div><a href={facebookPageUrl} target="_blank" rel="noreferrer" aria-label="Vista Royal on Facebook"><Facebook size={24} /><span>Visit our page</span><MoveUpRight size={14} /></a></section>
 
-        <section className="tab-panel reviews-tab" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" tabIndex={0} hidden={activeTab !== "reviews"}>
-          <section className="rating-section section-pad">
-            <div className="section-topline"><span>02 / CUSTOMER NOTES</span><span>WHATSAPP FEEDBACK</span></div>
-            <div className="rating-content">
-              <div className="rating-score"><strong>{shopRating.score.toFixed(1)}</strong><span>/ 5</span><div className="rating-stars" aria-label="4.3 out of 5 stars"><span style={{ background: "linear-gradient(90deg, #271a07 86%, rgba(39,26,7,.28) 86%)", backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent", WebkitTextFillColor: "transparent" }}>★★★★★</span></div></div>
-              <div className="rating-explainer"><p className="eyebrow">A NOTE FROM THE STORE</p><h1>Good pieces.<br /><em>Good people.</em></h1><p>Vista Royal's owner reports an overall 4.3/5 rating from customer feedback on WhatsApp. This is a store-wide rating, not a product-specific score.</p><small>Facebook currently shows: “{shopRating.facebookStatus}.” No individual review counts or customer quotes were available to verify.</small></div>
-            </div>
-          </section>
-        </section>
-
-        <section className="tab-panel exchange-tab" id="panel-exchange" role="tabpanel" aria-labelledby="tab-exchange" tabIndex={0} hidden={activeTab !== "exchange"}>
-          <section className="promise-section section-pad">
-            <div className="section-topline"><span>03 / THE VISTA ROYAL PROMISE</span><span>EXCHANGE POLICY</span></div>
-            <div className="promise-grid">
-              <div><p className="eyebrow">A CLEAR POLICY</p><h1>Shopping with<br /><em>peace of mind.</em></h1></div>
-              <div className="promise-copy"><span className="promise-mark">↗</span><p>{exchangePolicy}</p><small>Please contact Vista Royal with your order details and photos of the issue.</small><a className="text-link" href={whatsappGeneral} target="_blank" rel="noreferrer">Contact us on WhatsApp <ArrowUpRight size={15} /></a></div>
-            </div>
-          </section>
-        </section>
-
-        <section className="tab-panel about-tab" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabIndex={0} hidden={activeTab !== "about"}>
-          <section className="owner-section section-pad">
-            <div className="owner-watermark" aria-hidden="true">VR</div>
-            <div className="section-topline"><span>04 / ABOUT THE OWNER</span><span>LAHORE → THE WORLD</span></div>
-            <div className="owner-layout">
-              <div className="owner-heading"><p className="eyebrow">THE PERSON BEHIND THE LABEL</p><h1>Zohaib<br /><em>Qaiser.</em></h1><p className="owner-alias">ALSO KNOWN AS DRAKE QAISER · DRAKE · CALL ME DRAKE</p></div>
-              <div className="owner-bio"><p>Zohaib Qaiser is a Lahore-based Cambridge student, independent software developer, and international policy researcher. He is the founder and CEO of Tadarak and the owner of Vista Royal.</p><p className="owner-source">Profile details adapted from <a href="https://callmedrake.vercel.app/" target="_blank" rel="noreferrer">Call Me Drake <ArrowUpRight size={13} /></a>.</p><blockquote><span>“</span><p>{ownerQuote}</p><cite>01 / ON THE FIELD</cite></blockquote></div>
-            </div>
-          </section>
-        </section>
-
-        <section className="tab-panel contact-tab" id="panel-contact" role="tabpanel" aria-labelledby="tab-contact" tabIndex={0} hidden={activeTab !== "contact"}>
-          <section className="contact-page section-pad">
-            <div className="contact-page-intro"><p className="eyebrow">GOOD THINGS START WITH A MESSAGE</p><h1>Let's find your <em>next favourite.</em></h1><p>Contact Vista Royal for current designs, sizing, availability and prices.</p></div>
-            <div className="contact-card-grid">
-              <a className="contact-card whatsapp-card" href={whatsappGeneral} target="_blank" rel="noreferrer"><span>I / CHAT WITH US</span><strong>WhatsApp</strong><small>{whatsappPhone}</small><ArrowUpRight size={18} /></a>
-              <a className="contact-card" href={`mailto:${contactEmail}`}><span>II / WRITE TO US</span><strong>Email</strong><small>{contactEmail}</small><ArrowUpRight size={18} /></a>
-              <a className="contact-card" href={facebookPageUrl} target="_blank" rel="noreferrer"><span>III / FOLLOW THE PAGE</span><strong>Facebook</strong><small>Vista Royal · Barki Road, Lahore</small><ArrowUpRight size={18} /></a>
-            </div>
-          </section>
-        </section>
-      </main>
-
-      <footer className="site-footer">
-        <div className="footer-main">
-          <div className="footer-owner-credit"><span>© 2026 · VISTA ROYAL</span><strong>All rights to Zohaib Qaiser</strong><small>{whatsappPhone} · Barki Road, Lahore</small><a href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
-          <a className="footer-facebook" href={facebookPageUrl} target="_blank" rel="noreferrer" aria-label="Visit Vista Royal on Facebook"><span className="footer-facebook-mark"><Facebook size={23} strokeWidth={2.5} /></span><span>VISTA ROYAL ON FACEBOOK</span></a>
-          <a className="developer-credit-button" href="https://callmedrake.vercel.app/" target="_blank" rel="noreferrer">Dev by Zohaib Qaiser <ArrowUpRight size={15} /></a>
-        </div>
-        <nav className="footer-tabs" aria-label="Footer store sections">
-          {tabs.map((tab) => <button type="button" key={tab.id} onClick={() => selectTab(tab.id)}>{tab.label}</button>)}
-        </nav>
-        <div className="footer-bottom"><span>© 2026 VISTA ROYAL · MADE FOR THE WAY YOU ARRIVE</span><span>PAKISTANI BOUTIQUE FASHION</span><button type="button" onClick={() => selectTab("home")}>BACK TO HOME ↑</button></div>
-      </footer>
-      <a className="floating-whatsapp" href={whatsappGeneral} target="_blank" rel="noreferrer" aria-label="Chat with Vista Royal on WhatsApp"><span className="whatsapp-mark">W</span><span>Chat with us</span></a>
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
-    </div>
-  );
+    <section className="contact-strip section-pad"><div><p className="eyebrow">THE NEXT STEP IS YOURS</p><h2>Need a little more <em>detail?</em></h2><p>Message Vista Royal to ask about fabric, fit, availability or delivery.</p></div><a className="button button-primary" href={generalWhatsApp} target="_blank" rel="noreferrer"><MessageCircle size={16} /> Start a WhatsApp enquiry <ArrowUpRight size={15} /></a></section>
+  </StoreLayout>;
 }

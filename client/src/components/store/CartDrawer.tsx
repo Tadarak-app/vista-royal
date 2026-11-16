@@ -101,7 +101,7 @@ export default function CartDrawer({ open, onClose }: Props) {
           <div className="cart-empty">
             <div className="empty-bag-icon"><span>VR</span></div>
             <h3>Your bag is waiting</h3>
-            <p>Products will appear here once Vista Royal's verified catalogue is added.</p>
+            <p>Choose a piece from the collection and it will appear here for your enquiry.</p>
             <a className="button button-primary button-block" href={cartEnquiryLink([])} target="_blank" rel="noreferrer">Ask for the current collection</a>
             <button className="button button-quiet button-block" type="button" onClick={() => onCloseRef.current()}>Continue browsing</button>
           </div>

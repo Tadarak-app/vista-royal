@@ -4,6 +4,9 @@
   "buildCommand": "pnpm build:static",
   "outputDirectory": "dist/public",
   "rewrites": [
-    { "source": "/product/:slug", "destination": "/" }
+    { "source": "/product/:slug", "destination": "/seo/product/:slug.html" },
+    { "source": "/collections/:slug", "destination": "/seo/collections/:slug.html" },
+    { "source": "/lookbook", "destination": "/seo/lookbook.html" },
+    { "source": "/pages/:slug", "destination": "/seo/pages/:slug.html" }
   ]
 }

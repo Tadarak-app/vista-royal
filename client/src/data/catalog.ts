@@ -1,3 +1,5 @@
+import { newStockProducts } from "./newStock";
+
 export type Product = {
   id: string;
   slug: string;
@@ -8,10 +10,15 @@ export type Product = {
   image: string;
   imageAlt: string;
   tags?: string[];
+  gallery?: string[];
+  fabric?: string;
+  isNew?: boolean;
+  care?: string;
+  sizeNotes?: string;
 };
 
 /** Owner-supplied catalogue photos are ordered as in the stock PDF. */
-export const products: Product[] = [
+const existingProducts: Product[] = [
   {
     id: "photo-01",
     slug: "photo-01",
@@ -323,6 +330,8 @@ export const products: Product[] = [
     imageAlt: "Ivory textile draped to show a violet printed border with floral and paisley-like motifs and a hexagon-patterned band, beside a held solid violet swatch.",
   },
 ];
+
+export const products: Product[] = [...newStockProducts, ...existingProducts];
 
 export const shopRating = {
   score: 4.3,
