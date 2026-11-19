@@ -25,3 +25,14 @@
 ## Intentionally deferred until an owner-connected service is configured
 
 Customer accounts, payment checkout, online order management, live order tracking, newsletter registration, stock synchronization and COD/bank-transfer or delivery promises. WhatsApp remains an enquiry handoff, not order confirmation.
+
+
+## November stock and campaign media update — 19 November 2026
+
+- [x] Review the November stock PDF and separate supplier details. Combine similar photos of the same product in one gallery and place each matched item in an existing category.
+- [x] Add CRIMSOON BRAND Embroidered 2PC Collection at Rs. 2,900 with Dhanak Marina fabric, an embroidered shirt front, embroidered sleeves and embroidered trouser; group the matching PDF colourways.
+- [x] Add Blissonia silk kaftan 2-piece at Rs. 5,200 with heavy sequin embroidery, lace embellishment and silk trouser; retain supplier size and length notation with units flagged as unspecified.
+- [x] Add Blissonia chiffon maxi 3-piece at Rs. 4,550 with sequins-tilla embroidery, attached full inner, chiffon dupatta embellished with gotta lace and kattan silk trouser; retain supplier measurement notation with units flagged as unspecified.
+- [x] Replace the homepage hero photo with the supplied deep-teal embroidered look and frame it responsively so the neckline embroidery and roses remain visible.
+- [x] Add the supplied lookbook video in a dedicated homepage showcase; autoplay, loop and begin muted, with an accessible mute/unmute control and responsive sizing; preserve the established warm luxury palette, typography and layout balance.
+- [x] Preserve the previously published 38 listings, add these three November products for a total of 41 product pages, and prerender 58 canonical pages including collections and information routes.

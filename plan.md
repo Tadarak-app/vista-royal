@@ -28,6 +28,6 @@ Use semantic responsive controls, accessible names, visible keyboard focus, redu
 
 ## Implementation and release status
 
-Implemented in React/Vite using `client/src/pages/`, `client/src/components/store/`, `client/src/data/catalog.ts`, and `scripts/prerender-static.ts`. The production build generates 55 indexable routes, including 38 product detail pages. TypeScript, six tests, static build, generated sitemap/page metadata, asset checks, desktop and 390px mobile previews passed. Browser QA verified direct collection/product routes, Amave search filtering, quantity increment, two-unit cart subtotal and clearing the temporary test cart.
+Implemented in React/Vite using `client/src/pages/`, `client/src/components/store/`, `client/src/data/catalog.ts`, and `scripts/prerender-static.ts`. The 16 November production build generated 55 indexable routes with 38 product detail pages; the 19 November stock update adds three items for a current total of 41 product pages and 58 canonical pages. TypeScript, six tests, static build, generated sitemap/page metadata, and asset checks pass. The earlier release also passed desktop and 390px mobile previews and collection/product interaction QA.
 
 **Published:** application code commit `314aa70` is on `main`; GitHub reported its Vercel deployment successful. The production homepage, New In/Shop All collections, Amave product page, lookbook, size guidance, sitemap, final CSS bundle and a supplied product image all returned HTTP 200. See `verification-summary.md` for the audit details.

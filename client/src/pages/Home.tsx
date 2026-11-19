@@ -1,5 +1,5 @@
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Facebook, MessageCircle, MoveUpRight } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Facebook, MessageCircle, MoveUpRight, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import StoreLayout from "@/components/store/StoreLayout";
 import ProductCard from "@/components/store/ProductCard";
@@ -24,6 +24,8 @@ const categoryCards = [
 
 export default function Home() {
   useEffect(() => { updatePageMetadata({ title: "Vista Royal — A Considered Edit of Pakistani Fashion", description: "Discover a considered edit of Pakistani women's fashion at Vista Royal. Explore embroidered, occasionwear, winter and printed collections, and ask about availability." }); }, []);
+  const campaignVideoRef = useRef<HTMLVideoElement>(null);
+  const [campaignMuted, setCampaignMuted] = useState(true);
   const newPieces = products.filter((product) => product.isNew).slice(0, 4);
   const featuredPieces = newPieces.length ? newPieces : products.slice(0, 4);
   const generalWhatsApp = whatsappLink("Assalam-o-alaikum Vista Royal, please share the current collection and availability.");
@@ -36,7 +38,7 @@ export default function Home() {
         <div className="hero-ctas"><Link className="button button-primary" href="/collections/new-in">Discover new arrivals <ArrowRight size={16} /></Link><a className="button button-text" href={generalWhatsApp} target="_blank" rel="noreferrer">Speak with us <ArrowUpRight size={15} /></a></div>
         <div className="hero-bottom-note"><span>VISTA ROYAL · LAHORE</span><span>PAKISTANI WOMEN'S FASHION</span></div>
       </div>
-      <div className="hero-art"><img src={`${imageRoot}page-017.jpg`} alt="Full-length editorial photograph of a model in a rose-toned embroidered Pakistani formal outfit." fetchPriority="high" /><span className="hero-art-frame" aria-hidden="true">VR</span><div className="hero-art-label"><span>THE OCCASION EDIT</span><ArrowDownRight size={15} /></div><span className="hero-side-label">COLOUR · CRAFT · PRESENCE</span></div>
+      <div className="hero-art"><img src="/assets/catalog/stock-nov-2026/page-022.jpg" alt="Model in a deep teal embroidered chiffon maxi holding a brass vase filled with red roses." fetchPriority="high" /><span className="hero-art-frame" aria-hidden="true">VR</span><div className="hero-art-label"><span>THE OCCASION EDIT</span><ArrowDownRight size={15} /></div><span className="hero-side-label">COLOUR · CRAFT · PRESENCE</span></div>
     </section>
 
     <section className="category-section section-pad">
@@ -58,6 +60,11 @@ export default function Home() {
     <section className="lookbook-section section-pad">
       <div className="section-heading-row"><div><p className="eyebrow">VISTA ROYAL LOOKBOOK</p><h2>Made to <em>move.</em></h2></div><Link className="text-link" href="/lookbook">Open lookbook <ArrowUpRight size={14} /></Link></div>
       <div className="lookbook-grid">{lookbook.map((item, index) => <Link className={`lookbook-card lookbook-card-${index + 1}`} href="/lookbook" key={item.src}><img src={item.src} alt={item.alt} loading="lazy" /><span>0{index + 1} · {item.note}</span></Link>)}</div>
+    </section>
+
+    <section className="campaign-video-section section-pad" aria-labelledby="campaign-video-heading">
+      <div className="campaign-video-copy"><p className="eyebrow">VISTA ROYAL · LOOKBOOK IN MOTION</p><h2 id="campaign-video-heading">An entrance,<br /><em>in motion.</em></h2><p>A moving portrait of colour, embroidery and occasion. The film begins quietly; turn the sound on whenever you choose.</p></div>
+      <div className="campaign-video-frame"><video ref={campaignVideoRef} id="vista-royal-campaign-video" autoPlay loop muted={campaignMuted} playsInline preload="metadata" poster="/assets/catalog/stock-nov-2026/page-022.jpg" aria-label="Vista Royal campaign lookbook video featuring a deep teal embroidered outfit and roses"><source src="/assets/lookbook/vista-royal-campaign-nov-2026.mp4" type="video/mp4" /></video><span className="campaign-video-caption">COLOUR · CRAFT · PRESENCE</span><button className="campaign-video-toggle" type="button" onClick={() => { const video = campaignVideoRef.current; if (!video) return; const nextMuted = !video.muted; video.muted = nextMuted; setCampaignMuted(nextMuted); }} aria-controls="vista-royal-campaign-video" aria-pressed={!campaignMuted} aria-label={campaignMuted ? "Unmute campaign video" : "Mute campaign video"} title={campaignMuted ? "Turn sound on" : "Mute sound"}>{campaignMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}<span>{campaignMuted ? "Sound off" : "Sound on"}</span></button></div>
     </section>
 
     <section className="brand-note section-pad">
